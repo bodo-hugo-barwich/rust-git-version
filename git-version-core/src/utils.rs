@@ -16,10 +16,7 @@ where
 	I: IntoIterator<Item = S>,
 	S: AsRef<OsStr>,
 {
-	let cmd = Command::new("git")
-		.arg("describe")
-		.args(args)
-		.output()?;
+	let cmd = Command::new("git").arg("describe").args(args).output()?;
 
 	let output = verbose_command_error("git describe", cmd)?;
 	let output = strip_trailing_newline(output.stdout);
@@ -30,9 +27,7 @@ where
 /// Get the git directory for the current working directory.
 pub fn git_dir_cwd() -> std::io::Result<PathBuf> {
 	// Run git rev-parse --git-dir, and capture standard output.
-	let cmd = Command::new("git")
-		.args(&["rev-parse", "--git-dir"])
-		.output()?;
+	let cmd = Command::new("git").args(&["rev-parse", "--git-dir"]).output()?;
 
 	let output = verbose_command_error("git rev-parse --git-dir", cmd)?;
 	let output = strip_trailing_newline(output.stdout);
